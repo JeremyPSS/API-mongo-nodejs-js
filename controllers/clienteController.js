@@ -1,4 +1,3 @@
-
 const { model } = require('mongoose');
 var Cliente = require('../models/clienteModel');
 
@@ -8,7 +7,6 @@ function pruebas(req, res) {
     });
 }
 
-//endpoint to save a new client
 async function saveCliente(req, res) {
     var cliente = new Cliente(); //create a new cliente from the db
     var params = req.body; //data from the json request
@@ -31,6 +29,7 @@ async function saveCliente(req, res) {
     }
 }
 
+
 async function listCliente(req, res) {
     try {
         const data = await Cliente.find(); // 
@@ -40,13 +39,28 @@ async function listCliente(req, res) {
     }
 }
 
+async function listClientByID(req, res) {
+    try {
+        const {name} = req.params; //get the param from the url
+        const result = await Cliente.findOne({nombre:name}); //search with a method from moongose
+        if(result){
+            res.json(result);
+        }else{
+            res.status(404).json({message:'Cliente not found'});
+        }
+    } catch (e) {
+        res.status(500).json({ message: 'Server Error' });
+    }
+}
+
+
 async function updateCliente(req,res){
     try {
-        const { dni } = req.params;
+        const { dni } = req.params; //get the dni from the url
         if(dni){
-            const updatedClient = await Cliente.findOneAndUpdate({'dni':dni}, req.body, { new: true });
+            const updatedClient = await Cliente.findOneAndUpdate({'dni':dni}, req.body, { new: true }); //search the client
             if (updatedClient) {
-                res.status(200).json({message: 'Client updated successfully', updatedClient });
+                res.status(200).json({message: 'Client updated successfully', updatedClient }); //if exist
             } else {
                 res.status(404).json({ message: 'Client not found' });
             }
@@ -81,5 +95,6 @@ module.exports = {
     saveCliente,
     listCliente,
     updateCliente,
-    deleteCliente
+    deleteCliente,
+    listClientByID
 };

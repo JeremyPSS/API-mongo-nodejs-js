@@ -6,9 +6,11 @@ var api = express.Router();
 //http://localhost:3800/api/cliente
 
 api.get('/pruebas', ClienteController.pruebas);
-api.post('/cliente', ClienteController.saveCliente);
-api.get('/clientes', ClienteController.listCliente);
-api.post('/cliente/:dni', ClienteController.updateCliente);
-api.post('/clienteRemove/:dni', ClienteController.deleteCliente);
+
+api.get('/cliente', ClienteController.listCliente); //get clients
+api.get('/cliente/:name', ClienteController.listClientByID); //get clients by id
+api.post('/cliente', ClienteController.saveCliente); //save client
+api.put('/cliente/:dni', ClienteController.updateCliente); //update client
+api.delete('/cliente/:dni', ClienteController.deleteCliente); //delete cliente
 
 module.exports = api;
