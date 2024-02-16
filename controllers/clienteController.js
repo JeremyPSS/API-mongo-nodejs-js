@@ -6,7 +6,7 @@ function verifyToken(req, res, next) {
     const token = req.headers['authorization'];
 
     if (!token) {
-        return res.status(403).send({ auth: false, message: 'No token provided.' });
+        return res.status(403).send({ auth: false, message: 'Access denied! please verify your authentication' });
     }
 
     jwt.verify(token, 'pass123', function(err, decoded) {
@@ -36,10 +36,7 @@ async function saveCliente(req, res) {
         try {
             const clienteStored = await cliente.save(); // save the cliente in db
             if (clienteStored) {
-
-                const token = jwt.sign({ clientId: clienteStored._id }, 'your_secret_key', { expiresIn: '1h' });
-
-
+                const token = jwt.sign({ clientId: clienteStored._id }, 'pass123', { expiresIn: '1h' });
                 res.status(200).json({ message:'Client added successfully', clienteStored, token}); 
             } else {
                 res.status(500).json({ message: 'no se insertó el cliente' });
