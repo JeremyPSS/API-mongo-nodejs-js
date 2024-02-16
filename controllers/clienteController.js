@@ -1,5 +1,24 @@
 const { model } = require('mongoose');
 var Cliente = require('../models/clienteModel');
+const jwt = require('jsonwebtoken');
+
+function verifyToken(req, res, next) {
+    const token = req.headers['authorization'];
+
+    if (!token) {
+        return res.status(403).send({ auth: false, message: 'No token provided.' });
+    }
+
+    jwt.verify(token, 'pass123', function(err, decoded) {
+        if (err) {
+            return res.status(500).send({ auth: false, message: 'Failed to authenticate token.' });
+        }
+
+        // If everything is good, save to request for use in other routes
+        req.userId = decoded.id;
+        next();
+    });
+}
 
 function pruebas(req, res) {
     res.status(200).send({
@@ -17,7 +36,11 @@ async function saveCliente(req, res) {
         try {
             const clienteStored = await cliente.save(); // save the cliente in db
             if (clienteStored) {
-                res.status(200).json({ message:'Client added successfully', clienteStored}); 
+
+                const token = jwt.sign({ clientId: clienteStored._id }, 'your_secret_key', { expiresIn: '1h' });
+
+
+                res.status(200).json({ message:'Client added successfully', clienteStored, token}); 
             } else {
                 res.status(500).json({ message: 'no se insertó el cliente' });
             }
@@ -96,5 +119,6 @@ module.exports = {
     listCliente,
     updateCliente,
     deleteCliente,
-    listClientByID
+    listClientByID,
+    verifyToken
 };

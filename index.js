@@ -4,7 +4,7 @@ var port = 3800;
 
 mongoose.Promise = global.Promise;
 
-mongoose.connect('mongodb://192.168.0.103:27017',{useUnifiedTopology: true, useNewUrlParser: true}).
+mongoose.connect('mongodb://localhost:27017',{useUnifiedTopology: true, useNewUrlParser: true}).
     then(()=>{
         console.log('Conexion exitosa');
         app.listen(port, () => {
