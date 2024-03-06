@@ -2,12 +2,9 @@ var express = require('express');
 //var ClienteController = require('../controllers/clienteController');
 var BusController = require('../controllers/busController');
 var ChoferController = require('../controllers/choferController');
-<<<<<<< HEAD
 var MantenimientoController = require('../controllers/mantenimientoController');
 var ViajeController = require('../controllers/viajeController');
 var UsuarioController = require('../controllers/usuarioController');
-=======
->>>>>>> 3e0508a59cc4d37146e92676def6615ae6111c9d
 var cors = require('cors'); // Import the cors middleware
 
 var api = express.Router();
@@ -23,7 +20,6 @@ api.use(cors());
 // api.put('/cliente/:dni', ClienteController.verifyToken, ClienteController.updateCliente); //update client
 // api.delete('/cliente/:dni', ClienteController.verifyToken, ClienteController.deleteCliente); //delete cliente
 
-<<<<<<< HEAD
 api.get('/bus', BusController.listBus);
 api.get('/bus/:license', BusController.listBusByID);
 api.post('/bus', BusController.saveBus);
@@ -35,21 +31,6 @@ api.get('/chofer/:code', ChoferController.listChoferByID);
 api.post('/chofer', ChoferController.saveChofer);
 api.put('/chofer/:code', ChoferController.updateChofer);
 api.delete('/chofer/:code', ChoferController.deleteChofer);
-=======
-api.get('/bus', BusController.listBus); 
-api.get('/bus/:license',  BusController.listBusByID); 
-api.post('/bus',  BusController.saveBus); 
-api.put('/bus/:code',  BusController.updateBus); 
-api.delete('/bus/:code',  BusController.deleteBus); 
-
-api.get('/chofer', ChoferController.listChofer); 
-api.get('/chofer/:code',  ChoferController.listChoferByID); 
-api.post('/chofer',  ChoferController.saveChofer); 
-api.put('/chofer/:code',  ChoferController.updateChofer); 
-api.delete('/chofer/:code',  ChoferController.deleteChofer); 
-
-
->>>>>>> 3e0508a59cc4d37146e92676def6615ae6111c9d
 
 
 api.get('/mante', MantenimientoController.listMantenimiento);
